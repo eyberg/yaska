@@ -1,0 +1,15 @@
+ABOUT:
+yaska was an ancient vedic grammarian and also happens to be the eponym
+for this utility
+
+WHY:
+basically I have 6-7 grammars that are ALL dealing with natural 
+language and it is basically a real bitch sometimes to figure out if
+I'm making the right changes as I don't have that much experience with
+pegs in general and antlr in specific -- I've racked up quite a few
+run-time warnings dealing with this since my tests convey such a wide-range
+of natural-language expressions
+
+this test-suite allows you to sit back and concentrate on the grammar                                             
+w/out having to resort to antlworks knowing that whenever you make a 
+change your tests are passing and are making progress
