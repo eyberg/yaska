@@ -1,6 +1,9 @@
 require 'open3'
+require 'Colorify'
 
 class Yaska
+  include Colorify
+
   attr_accessor :cwcount
   attr_accessor :rwcount
 
@@ -81,34 +84,34 @@ class Yaska
 
     # testing errors
     if sout.match("FAILURES!!!") then
-      puts "\033[1m\033[31m\033[40m Broke a Test! \033[0m"
+      puts colorRed("Broke a Test!")
     else
-      puts "\033[1m\033[32m\033[40m Passing all Tests! \033[0m"
+      puts colorGreen("Passing all Tests!")
     end
 
     # compilation warnings
-    puts "\033[1m\033[30m\033[40m Compile-Time Warnings \033[0m"
-    puts "\033[1m\033[30m\033[40m -----------------\033[0m"
+    puts colorBlack("Compile-Time Warnings")
+    puts colorBlack("-----------------")
 
     if @cwcount < comwarn then
-      puts "\033[1m\033[31m\033[40m #{comwarn} Warnings: Generating more! \033[0m"
+      puts colorRed("#{comwarn} Warnings: Generating more!")
     elsif @cwcount.eql? comwarn then
-      puts "\033[1m\033[33m\033[40m #{comwarn} Warnings: Generating the same number! \033[0m"
+      puts colorYellow("#{comwarn} Warnings: Generating the same number!")
     else
-      puts "\033[1m\033[32m\033[40m #{comwarn} Warnings: Generating less! \033[0m"
+      puts colorGreen("#{comwarn} Warnings: Generating less!")
     end
     @cwcount = comwarn
 
     # runtime warnings
-    puts "\033[1m\033[30m\033[40m Runtime Warnings \033[0m"
-    puts "\033[1m\033[30m\033[40m -----------------\033[0m"
+    puts colorBlack("Runtime Warnings")
+    puts colorBlack("-----------------")
 
     if @rwcount < runwarn then
-      puts "\033[1m\033[31m\033[40m #{runwarn} Warnings: Generating more! \033[0m"
+      puts colorRed("#{runwarn} Warnings: Generating more!")
     elsif @rwcount.eql? runwarn then
-      puts "\033[1m\033[33m\033[40m #{runwarn} Warnings: Generating the same number! \033[0m"
+      puts colorYellow("#{runwarn} Warnings: Generating the same number!")
     else
-      puts "\033[1m\033[32m\033[40m #{runwarn} Warnings: Generating less! \033[0m"
+      puts colorGreen("#{runwarn} Warnings: Generating less!")
     end
 
     @rwcount = runwarn
