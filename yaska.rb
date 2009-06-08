@@ -26,15 +26,17 @@ class Yaska
     eput = []
     stderr.each do |line| eput << line end
 
+    ecount = 0
     eput.each do |line|
       puts line
+      if !line.match(/error|warning/).nil? then ecount += 1 end
     end
 
     IO.popen("javac #{@@GRAMMARDIR}/#{File.basename(@@GRAMMARFILE, '.g')}*.java") do |io|
       io.each_line {}
     end
 
-    return eput.count
+    return ecount
   end
 
   # main event loop
