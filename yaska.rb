@@ -6,6 +6,7 @@ class Yaska
 
   attr_accessor :cwcount
   attr_accessor :rwcount
+  attr_accessor :firsttime
 
   @@GRAMMARDIR = "grammars"
   @@GRAMMARFILE = "Test.g"
@@ -15,6 +16,7 @@ class Yaska
   def initialize
     @cwcount = 0
     @rwcount = 0
+    @firsttime = true
   end
 
   # compile the grammar, spit out any warnings
@@ -93,12 +95,17 @@ class Yaska
     puts colorBlack("Compile-Time Warnings")
     puts colorBlack("-----------------")
 
-    if @cwcount < comwarn then
-      puts colorRed("#{comwarn} Warnings: Generating more!")
-    elsif @cwcount.eql? comwarn then
-      puts colorYellow("#{comwarn} Warnings: Generating the same number!")
+    msg = "#{comwarn} Warnings"
+    if @cwcount < comwarn and !@firsttime then
+      puts colorRed("#{msg}: Generating more!")
+    elsif @cwcount.eql? comwarn and !@firsttime then
+      puts colorYellow("#{msg}s: Generating the same number!")
+    elsif !@firsttime
+      puts colorGreen("#{msg}: Generating less!")
+    elsif @firstttime and comwarn.eql? 0
+      puts colorGreen("#{msg}: No Errors!")
     else
-      puts colorGreen("#{comwarn} Warnings: Generating less!")
+      puts colorRed("#{msg}: Uh-oh!")
     end
     @cwcount = comwarn
 
@@ -106,16 +113,23 @@ class Yaska
     puts colorBlack("Runtime Warnings")
     puts colorBlack("-----------------")
 
-    if @rwcount < runwarn then
-      puts colorRed("#{runwarn} Warnings: Generating more!")
-    elsif @rwcount.eql? runwarn then
-      puts colorYellow("#{runwarn} Warnings: Generating the same number!")
+    msg = "#{runwarn} Warnings"
+    if @rwcount < runwarn and !@firsttime then
+      puts colorRed("#{msg}: Generating more!")
+    elsif @rwcount.eql? runwarn and !@firsttime then
+      puts colorYellow("#{msg}: Generating the same number!")
+    elsif !@firsttime
+      puts colorGreen("#{msg}: Generating less!")
+    elsif @firsttime and runwarn.eql? 0
+      puts colorGreen("#{msg}: No errors!")
     else
-      puts colorGreen("#{runwarn} Warnings: Generating less!")
+      puts colorRed("#{msg}: Uh-oh!")
     end
 
     @rwcount = runwarn
 
+    # set firsttime flag
+    @firsttime = false
   end
 
 end
