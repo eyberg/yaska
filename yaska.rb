@@ -66,7 +66,7 @@ class Yaska
     comwarn = compile
 
     # run
-    stdin, stdout, stderr = Open3.popen3("java org.junit.runner.JUnitCore #{@@PACKAGE}.#{@@TESTFILE}")
+    stdin, stdout, stderr = Open3.popen3("javac #{@@TESTFILE}.java; java org.junit.runner.JUnitCore #{@@PACKAGE}.#{@@TESTFILE}")
 
     # output stdout (errors)
     oput = []
@@ -101,7 +101,7 @@ class Yaska
     if @cwcount < comwarn and !@firsttime then
       puts colorRed("#{msg}: Generating more!")
     elsif @cwcount.eql? comwarn and !@firsttime then
-      puts colorYellow("#{msg}s: Generating the same number!")
+      puts colorYellow("#{msg}: Generating the same number!")
     elsif !@firsttime
       puts colorGreen("#{msg}: Generating less!")
     elsif @firstttime and comwarn.eql? 0
