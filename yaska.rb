@@ -46,6 +46,8 @@ class Yaska
     ttop = nil    # last unit-test modification-time
     gtop = nil    # last grammar modification-time
 
+    puts colorBlue("Testing #{@@GRAMMARFILE}")
+
     loop do
       tcurrent = File.mtime "#{@@TESTFILE}.java"
       gcurrent = File.mtime "#{@@GRAMMARDIR}/#{@@GRAMMARFILE}"
