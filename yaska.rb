@@ -47,7 +47,7 @@ class Yaska
     gtop = nil    # last grammar modification-time
 
     puts colorBlue("Testing #{@@GRAMMARFILE}")
-
+ 
     loop do
       tcurrent = File.mtime "#{@@TESTFILE}.java"
       gcurrent = File.mtime "#{@@GRAMMARDIR}/#{@@GRAMMARFILE}"
@@ -57,7 +57,6 @@ class Yaska
         gtop = gcurrent
         ttop = tcurrent
       end
-
       sleep 2
     end
   end
@@ -72,7 +71,14 @@ class Yaska
 
     # output stdout (errors)
     oput = []
-    stdout.each do |line| oput << line end
+
+    fails = 0
+    stdout.each do |line| 
+      oput << line
+      if line.match("Failures") then
+        fails = line.split("Failures: ")[1].rstrip
+      end
+    end
     sout = oput.join
 
     oput.each do |line|
@@ -90,7 +96,7 @@ class Yaska
 
     # testing errors
     if sout.match("FAILURES!!!") then
-      puts colorRed("Broke a Test!")
+      puts colorRed("Broke #{fails} Test(s)!")
     else
       puts colorGreen("Passing all Tests!")
     end
